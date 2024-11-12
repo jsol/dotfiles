@@ -15,7 +15,12 @@ fi
 ROOT=`git rev-parse --show-toplevel`
 DEST=~/.config
 
-mkdir -p "$DEST/nvim"
+mkdir -p "$DEST/nvim/lua"
+ln -sf "$ROOT/nvim/init.lua" "$DEST/nvim/"
+for s in "$ROOT"/nvim/lua/*.lua; do
+  ln -sf "$s" "$DEST/nvim/lua/"
+done
+
 ln -sf "$ROOT/nvim/init.lua" "$DEST/nvim/"
 
 mkdir -p "$DEST/tmux"
