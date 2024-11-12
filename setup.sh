@@ -1,6 +1,6 @@
 #!/bin/bash
 
-req=(npm jq git fd rg bash-language-server harper-ls typos-lsp vscode-json-language-server go kitty)
+req=(npm jq git fd rg bash-language-server harper-ls typos-lsp vscode-json-language-server go kitty nvim tmux)
 
 for cmd in ${req[@]}; do
   if ! command -v "$cmd"; then

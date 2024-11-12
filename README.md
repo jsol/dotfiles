@@ -20,4 +20,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ````
 
 ## Install
-Just run the install.sh script. It will symlink the config and check that the dependencies are installed.
+Just run the setup.sh script. It will symlink the config and check that the dependencies are installed.
+
+Start nvim to install its plugins.
+Start tmux and press "ctrl-b I" to setup the plugins
