@@ -2,7 +2,7 @@
 
 ## Dependencies (Debian / Ubuntu)
 ````
-# nvim
+### nvim
 sudo apt install clangd fd-find
 ln -s $(which fdfind) ~/.local/bin/fd
 
@@ -14,8 +14,11 @@ npm i -g vscode-langservers-extracted
 cargo install harper-ls --locked
 wget https://github.com/tekumara/typos-lsp/releases/download/v0.1.29/typos-lsp-v0.1.29-x86_64-unknown-linux-gnu.tar.gz && tar -xzvf typos-lsp-* -C ~/.local/bin
 
+### Fonts
+Font Awesome for icons
+JetBrains Mono for ligature aware mono font (either through nerd fonts or https://www.jetbrains.com/lp/mono/)
 
-# tmux
+### tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ````
 
