@@ -28,10 +28,42 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  {'folke/tokyonight.nvim'},
-  {'VonHeikemen/lsp-zero.nvim', branch = 'v4.x'},
-  {'neovim/nvim-lspconfig'},
-  {'hrsh7th/cmp-nvim-lsp'},
+{
+  'stevearc/oil.nvim',
+  ---@module 'oil'
+  ---@type oil.SetupOpts
+  opts = {},
+  -- Optional dependencies
+  dependencies = { { "echasnovski/mini.icons", opts = {} } },
+  -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+},
+{
+  "johmsalas/text-case.nvim",
+  -- Switch case of variable. gau toUpper, gal toLowwer, gas toSnake, gad toDash, gac toCamel
+  dependencies = { "nvim-telescope/telescope.nvim" },
+  config = function()
+    require("textcase").setup({})
+    require("telescope").load_extension("textcase")
+  end,
+  keys = {
+    "ga", -- Default invocation prefix
+    { "ga.", "<cmd>TextCaseOpenTelescope<CR>", mode = { "n", "x" }, desc = "Telescope" },
+  },
+  cmd = {
+    -- NOTE: The Subs command name can be customized via the option "substitude_command_name"
+    "Subs",
+    "TextCaseOpenTelescope",
+    "TextCaseOpenTelescopeQuickChange",
+    "TextCaseOpenTelescopeLSPChange",
+    "TextCaseStartReplacingCommand",
+  },
+  -- available after the first executing of it or after a keymap of text-case.nvim has been used.
+  lazy = false,
+},
+  {'folke/tokyonight.nvim'}, -- Theme
+  {'VonHeikemen/lsp-zero.nvim', branch = 'v4.x'}, -- LSP integrations
+  {'neovim/nvim-lspconfig'}, -- More LSP stuff
+  {'hrsh7th/cmp-nvim-lsp'}, -- Agaim
   {'hrsh7th/nvim-cmp',
     commit = 'b356f2c'
   },
@@ -41,13 +73,14 @@ require('lazy').setup({
     opts = {},
     config = function(_, opts) require'lsp_signature'.setup(opts) end
   },
+
   {
     'nvim-telescope/telescope.nvim', tag = '0.1.8',
 -- or                              , branch = '0.1.x',
+-- Fuzzy finder ,ff find file, ,fg find with grep in all files ,fb find in buffers
       dependencies = { 'nvim-lua/plenary.nvim' }
     }
 })
-
 vim.opt.termguicolors = true
 vim.cmd.colorscheme('tokyonight')
 
@@ -95,8 +128,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+-- Setting up autocomplete / LSP
+-- gd gD go to (definition), gr go to reference ctrl+o back in jumpstack,
+-- ctrl+space autocomplete, <F3> autoformat <F4> code actions
 local cmp = require('cmp')
-
 cmp.setup({
   completion = {
     autocomplete = false
@@ -122,6 +157,7 @@ cmp.setup({
   }),
 })
 
+-- Setting up LSP
 require('lspconfig').bashls.setup({})
 require('lspconfig').jsonls.setup({})
 require('lspconfig').clangd.setup({})
@@ -138,9 +174,10 @@ require('lspconfig').harper_ls.setup {
     }
   },
 }
+-- Enable alt+hjkl to move line / selection
 require('mini.move').setup() 
-
-
+-- File browser
+require("oil").setup()
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
@@ -148,6 +185,3 @@ vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live gr
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
-
-require('switch_case')
-vim.keymap.set('n', '<leader>s', '<cmd>lua require("switch_case").switch_case()<CR>', {noremap = true, silent = true})
