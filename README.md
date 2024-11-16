@@ -19,7 +19,7 @@ Font Awesome for icons
 JetBrains Mono for ligature aware mono font (either through nerd fonts or https://www.jetbrains.com/lp/mono/)
 
 ### tmux
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+Plugin manager should be installed by the setup script.
 ````
 
 ## Install

@@ -26,6 +26,12 @@ ln -sf "$ROOT/nvim/init.lua" "$DEST/nvim/"
 mkdir -p "$DEST/tmux"
 ln -sf "$ROOT/tmux/tmux.conf" "$DEST/tmux/"
 
+# Setting up the tmux plugin manager and downloading the plugins
+if ! [ -d "$HOME/.tmux/plugins/tpm" ]; then
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  ~/.tmux/plugins/tpm/scripts/install_plugins.sh
+fi
+
 mkdir -p "$DEST/kitty"
 ln -sf "$ROOT/kitty/kitty.conf" "$DEST/kitty/"
 ln -sf "$ROOT/kitty/tokyonight.conf" "$DEST/kitty/"
