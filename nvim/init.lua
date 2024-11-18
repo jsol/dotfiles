@@ -163,6 +163,12 @@ require('lspconfig').bashls.setup({})
 require('lspconfig').jsonls.setup({})
 require('lspconfig').clangd.setup({capabilities = {
   offsetEncoding = { "utf-16" },
+  cmd = {
+    "clangd",
+    "--background-index",
+    "--suggest-missing-includes",
+    "--cross-file-rename",
+  },
 }})
 require('lspconfig').gopls.setup({})
 require('lspconfig').rust_analyzer.setup({})
