@@ -14,6 +14,12 @@ npm i -g vscode-langservers-extracted
 cargo install harper-ls --locked
 wget https://github.com/tekumara/typos-lsp/releases/download/v0.1.29/typos-lsp-v0.1.29-x86_64-unknown-linux-gnu.tar.gz && tar -xzvf typos-lsp-* -C ~/.local/bin
 
+Meson lsp:
+https://github.com/JCWasmx86/mesonlsp/releases/tag/v4.3.7
+
+Marksman LSP
+wget https://github.com/artempyanykh/marksman/releases/download/2024-11-20/marksman-linux-arm64 && chmod a+x marksman-linux-arm64 && mv marksman-linux-arm64 ~/.local/bin
+
 ### Fonts
 Font Awesome for icons
 JetBrains Mono for ligature aware mono font (either through nerd fonts or https://www.jetbrains.com/lp/mono/)
