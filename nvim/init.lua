@@ -1,5 +1,4 @@
 vim.cmd('colorscheme habamax')
-
 vim.g.mapleader = ","
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
@@ -200,3 +199,7 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help ta
 -- Matching white space at end of line
 vim.cmd.match('ExtraWhitespace /\\s\\+$/')
 vim.cmd.highlight('ExtraWhitespace ctermbg=red guibg=red')
+
+require('search')
+vim.keymap.set('n', '<leader>g', '<cmd>lua require("search").search()<CR>', {noremap = true, silent = true})
+
