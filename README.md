@@ -28,6 +28,24 @@ JetBrains Mono for ligature aware mono font (either through nerd fonts or https:
 Plugin manager should be installed by the setup script.
 ````
 
+## Install dependencies into nix profile instead
+nix profile install \
+    nixpkgs#bash-language-server \
+    nixpkgs#fd \
+    nixpkgs#go \
+    nixpkgs#gopls \
+    nixpkgs#harper \
+    nixpkgs#marksman \
+    nixpkgs#meson \
+    nixpkgs#mesonlsp \
+    nixpkgs#neovim \
+    nixpkgs#nix \
+    nixpkgs#ripgrep \
+    nixpkgs#typos \
+    nixpkgs#vscode-langservers-extracted
+
+The upside of nix is updating is easier with nix profile update --all
+
 ## Install
 Just run the setup.sh script. It will symlink the config and check that the dependencies are installed.
 
