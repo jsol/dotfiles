@@ -6,6 +6,8 @@
 sudo apt install clangd fd-find
 ln -s $(which fdfind) ~/.local/bin/fd
 
+sudo apt install tree-sitter-cli
+
 curl -LO https://github.com/BurntSushi/ripgrep/releases/download/14.1.0/ripgrep_14.1.0-1_amd64.deb
 sudo dpkg -i ripgrep_14.1.0-1_amd64.deb
 npm i -g bash-language-server
@@ -29,12 +31,13 @@ Plugin manager should be installed by the setup script.
 ````
 
 ## Install dependencies into nix profile instead
-Install nix as a single-user install (does not work globaly on a managed os)
+Install nix as a single-user install (does not work globally on a managed os)
 
 ```
 sh <(curl -L https://nixos.org/nix/install)
 ```
-`
+
+```
 nix profile add \
     "nixpkgs#bash-language-server" \
     "nixpkgs#fd" \
@@ -45,13 +48,12 @@ nix profile add \
     "nixpkgs#meson" \
     "nixpkgs#mesonlsp" \
     "nixpkgs#neovim" \
-    "nixpkgs#nix" \
     "nixpkgs#ripgrep" \
+    "nixpkgs#tmux" \
     "nixpkgs#typos" \
     "nixpkgs#typos-lsp" \
     "nixpkgs#vscode-langservers-extracted"
-`
-
+```
 The upside of nix is updating is easier with nix profile update --all
 
 ## Install
