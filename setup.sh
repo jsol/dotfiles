@@ -26,6 +26,9 @@ ln -sf "$ROOT/nvim/init.lua" "$DEST/nvim/"
 mkdir -p "$DEST/tmux"
 ln -sf "$ROOT/tmux/tmux.conf" "$DEST/tmux/"
 
+mkdir -p "$DEST/nix"
+ln -sf "$ROOT/nix/nix.conf" "$DEST/nix/"
+
 # Setting up the tmux plugin manager and downloading the plugins
 if ! [ -d "$HOME/.tmux/plugins/tpm" ]; then
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

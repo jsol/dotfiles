@@ -29,20 +29,28 @@ Plugin manager should be installed by the setup script.
 ````
 
 ## Install dependencies into nix profile instead
-nix profile install \
-    nixpkgs#bash-language-server \
-    nixpkgs#fd \
-    nixpkgs#go \
-    nixpkgs#gopls \
-    nixpkgs#harper \
-    nixpkgs#marksman \
-    nixpkgs#meson \
-    nixpkgs#mesonlsp \
-    nixpkgs#neovim \
-    nixpkgs#nix \
-    nixpkgs#ripgrep \
-    nixpkgs#typos \
-    nixpkgs#vscode-langservers-extracted
+Install nix as a single-user install (does not work globaly on a managed os)
+
+```
+sh <(curl -L https://nixos.org/nix/install)
+```
+`
+nix profile add \
+    "nixpkgs#bash-language-server" \
+    "nixpkgs#fd" \
+    "nixpkgs#go" \
+    "nixpkgs#gopls" \
+    "nixpkgs#harper" \
+    "nixpkgs#marksman" \
+    "nixpkgs#meson" \
+    "nixpkgs#mesonlsp" \
+    "nixpkgs#neovim" \
+    "nixpkgs#nix" \
+    "nixpkgs#ripgrep" \
+    "nixpkgs#typos" \
+    "nixpkgs#typos-lsp" \
+    "nixpkgs#vscode-langservers-extracted"
+`
 
 The upside of nix is updating is easier with nix profile update --all
 
