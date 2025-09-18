@@ -27,6 +27,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
+  {"nvim-treesitter/nvim-treesitter", branch = 'master', lazy = false, build = ":TSUpdate"},
 {
   'stevearc/oil.nvim',
   ---@module 'oil'
@@ -60,18 +61,13 @@ require('lazy').setup({
   lazy = false,
 },
   {'folke/tokyonight.nvim'}, -- Theme
-  {'VonHeikemen/lsp-zero.nvim', branch = 'v4.x'}, -- LSP integrations
   {'neovim/nvim-lspconfig'}, -- More LSP stuff
-  {'hrsh7th/cmp-nvim-lsp'}, -- Agaim
-  {'hrsh7th/nvim-cmp',
-    commit = 'b356f2c'
-  },
   {'echasnovski/mini.nvim', version = '*' },
-  {'ray-x/lsp_signature.nvim',
-    event = "VeryLazy",
-    opts = {},
-    config = function(_, opts) require'lsp_signature'.setup(opts) end
-  },
+--   {'ray-x/lsp_signature.nvim',
+--    event = "VeryLazy",
+--    opts = {},
+--    config = function(_, opts) require'lsp_signature'.setup(opts) end
+--  },
 
   {
     'nvim-telescope/telescope.nvim', tag = '0.1.8',
@@ -87,14 +83,6 @@ vim.cmd.colorscheme('tokyonight')
 -- This will avoid an annoying layout shift in the screen
 vim.opt.signcolumn = 'yes'
 
--- Add cmp_nvim_lsp capabilities settings to lspconfig
--- This should be executed before you configure any language server
-local lspconfig_defaults = require('lspconfig').util.default_config
-lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-  'force',
-  lspconfig_defaults.capabilities,
-  require('cmp_nvim_lsp').default_capabilities()
-)
 
 -- This is where you enable features that only work
 -- if there is a language server active in the file
@@ -102,16 +90,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'LSP actions',
   callback = function(event)
     local opts = {buffer = event.buf}
-
-    local bufnr = event.buf
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if vim.tbl_contains({ 'null-ls' }, client.name) then  -- blacklist lsp
-      return
-    end
-    require("lsp_signature").on_attach({
-      -- ... setup options here ...
-    }, bufnr)
-
 
 
     vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
@@ -132,36 +110,23 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- Setting up autocomplete / LSP
 -- gd gD go to (definition), gr go to reference ctrl+o back in jumpstack,
 -- ctrl+space autocomplete, <F3> autoformat <F4> code actions
-local cmp = require('cmp')
-cmp.setup({
-  completion = {
-    autocomplete = false
-  },
-  sources = {
-    {name = 'nvim_lsp'},
-    {name = 'buffer'},
-  },
-  snippet = {
-    expand = function(args)
-      -- You need Neovim v0.10 to use vim.snippet
-      vim.snippet.expand(args.body)
-    end,
-  },
-    mapping = cmp.mapping.preset.insert({
-    -- Confirm completion
-    ['<CR>'] = cmp.mapping.confirm({select = true}),
-
-    -- Scroll up and down the documentation window
-    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-d>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-  }),
-})
 
 -- Setting up LSP
-require('lspconfig').bashls.setup({})
-require('lspconfig').jsonls.setup({})
-require('lspconfig').clangd.setup({capabilities = {
+vim.lsp.enable('bashls')
+vim.lsp.enable('jsonls')
+vim.lsp.enable('clangd')
+vim.lsp.enable('gopls')
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('mesonlsp')
+vim.lsp.enable('marksman')
+-- Spelling
+vim.lsp.enable('typos_lsp')
+
+-- Grammar (MD and comments)
+vim.lsp.enable('harper_ls')
+
+
+vim.lsp.config('clangd', {capabilities = {
   offsetEncoding = { "utf-16" },
   cmd = {
     "clangd",
@@ -170,21 +135,15 @@ require('lspconfig').clangd.setup({capabilities = {
     "--cross-file-rename",
   },
 }})
-require('lspconfig').gopls.setup({})
-require('lspconfig').rust_analyzer.setup({})
-require('lspconfig').mesonlsp.setup({})
-require('lspconfig').marksman.setup({})
--- Spelling
-require('lspconfig').typos_lsp.setup({})
--- Grammar (MD and comments)
-require('lspconfig').harper_ls.setup {
+vim.lsp.config('harper_ls', {
   settings = {
     ["harper-ls"] = {
       userDictPath = "~/dict.txt",
       fileDictPath = "~/.harper/",
     }
   },
-}
+})
+
 -- Enable alt+hjkl to move line / selection
 require('mini.move').setup() 
 -- File browser
