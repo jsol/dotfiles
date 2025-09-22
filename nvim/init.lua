@@ -63,11 +63,11 @@ require('lazy').setup({
   {'folke/tokyonight.nvim'}, -- Theme
   {'neovim/nvim-lspconfig'}, -- More LSP stuff
   {'echasnovski/mini.nvim', version = '*' },
---   {'ray-x/lsp_signature.nvim',
---    event = "VeryLazy",
---    opts = {},
---    config = function(_, opts) require'lsp_signature'.setup(opts) end
---  },
+   {'ray-x/lsp_signature.nvim',
+    event = "VeryLazy",
+    opts = {},
+    config = function(_, opts) require'lsp_signature'.setup(opts) end
+  },
 
   {
     'nvim-telescope/telescope.nvim', tag = '0.1.8',
@@ -161,4 +161,16 @@ vim.cmd.highlight('ExtraWhitespace ctermbg=red guibg=red')
 
 require('search')
 vim.keymap.set('n', '<leader>g', '<cmd>lua require("search").search()<CR>', {noremap = true, silent = true})
+
+-- Enable autocomplete
+--
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client:supports_method('textDocument/completion') then
+      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+    end
+  end,
+})
 
