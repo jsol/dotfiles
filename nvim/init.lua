@@ -27,6 +27,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
+  {"github/copilot.vim" },
   {"nvim-treesitter/nvim-treesitter", branch = 'master', lazy = false, build = ":TSUpdate"},
 {
   'stevearc/oil.nvim',
@@ -173,6 +174,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
+
+vim.keymap.set('i', '<c-space>', function()
+  vim.lsp.completion.get()
+end)
 
 
 vim.diagnostic.config({
