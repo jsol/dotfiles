@@ -61,3 +61,7 @@ Just run the setup.sh script. It will symlink the config and check that the depe
 
 Start nvim to install its plugins.
 Start tmux and press "ctrl-b I" to setup the plugins
+
+# Niri
+
+Niri config here requires waybar, fuzzel, mako, swaylock, swayidle, swaybg
