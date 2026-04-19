@@ -101,7 +101,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
     vim.keymap.set('n', 'gq', '<cmd>cclose<cr>', opts) -- Close the reference window
     vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-    vim.keymap.set('n', 'ge', '<cmd>lua vim.diagnostic.goto_next({severity=vim.diagnostic.severity.ERROR, wrap = true})<cr>', opts)
+    vim.keymap.set('n', 'ge', '<cmd>lua vim.diagnostic.jump({count=1,severity=vim.diagnostic.severity.ERROR, wrap = true})<cr>', opts)
     vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
     vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
     vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
@@ -120,6 +120,7 @@ vim.lsp.enable('gopls')
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('mesonlsp')
 vim.lsp.enable('marksman')
+vim.lsp.enable("basedpyright")
 -- Spelling
 vim.lsp.enable('typos_lsp')
 
@@ -180,13 +181,14 @@ vim.keymap.set('i', '<c-space>', function()
 end)
 
 
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]],{noremap=true})
+
 vim.diagnostic.config({
   -- Use the default configuration
-  virtual_lines = true
 
   -- Alternatively, customize specific options
-  -- virtual_lines = {
+  virtual_lines = {
   --  -- Only show virtual line diagnostics for the current cursor line
-  --  current_line = true,
-  -- },
+    current_line = true,
+  },
 })
