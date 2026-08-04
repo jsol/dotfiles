@@ -38,3 +38,7 @@ fi
 mkdir -p "$DEST/kitty"
 ln -sf "$ROOT/kitty/kitty.conf" "$DEST/kitty/"
 ln -sf "$ROOT/kitty/tokyonight.conf" "$DEST/kitty/"
+
+mkdir -p "$DEST/ghostty"
+ln -sf "$ROOT/ghostty/config" "$DEST/ghostty/"
+ln -s "$ROOT/ghostty/themes" "$DEST/ghostty/"
